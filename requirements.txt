@@ -1,0 +1,4 @@
+pandas # Useful package for data anaylsis and manipulations using dataframes
+openpyxl # Required for opening excel file using pandas
+matplotlib # Building visuals and plots
+seabron # Complement to matplotlib for statistical visualization
