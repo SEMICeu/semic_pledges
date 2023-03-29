@@ -2,3 +2,5 @@ pandas # Useful package for data anaylsis and manipulations using dataframes
 openpyxl # Required for opening excel file using pandas
 matplotlib # Building visuals and plots
 seabron # Complement to matplotlib for statistical visualization
+nltk # Library used for NLP operations
+gensim # Library for word embedding
