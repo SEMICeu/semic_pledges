@@ -22,7 +22,7 @@ from nltk.corpus import wordnet
 """ Loading the cleaned data file: CleanedData.csv """
 
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path
-PledgesCsvPath = str(DirPpath.absolute()) + "\semic_pledges\DataExploration\CleanedData.csv" 
+PledgesCsvPath = str(DirPpath.absolute()) + "\semic_pledges\CleanedData.csv" 
 
 print("The current location of CleanedData.csv is: ", PledgesCsvPath)
 
@@ -94,7 +94,8 @@ print("end pre-processing\n")
 print(PledgesDf.head())
 
 # Outputting the pre-processed files
-PledgesDf.to_csv(str(DirPpath.absolute()) + "\PreProcessedData.csv")
+PreProcessedDataPath = str(DirPpath.absolute()) + "\semic_pledges\PreProcessedData.csv"
+PledgesDf.to_csv(PreProcessedDataPath)
 
 #PledgeTokens = [nltk.word_tokenize(i) for i in PledgesDf["PreProcessedText"]]
 
