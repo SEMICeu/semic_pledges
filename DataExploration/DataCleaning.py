@@ -9,6 +9,8 @@ import string # For handling of textual data
 import matplotlib.pyplot as plt # For data visualization
 import seaborn as sns # For statistical and data visualization
 
+from langdetect import detect # Language detection models
+
 
 """ Uploading the source file: PledgeList.xlsx """
 
@@ -42,7 +44,26 @@ else:
     print("\nNo apparent Data Type issues")
 
 
+""" Splitting by languages (Fr and En) """
+
+liste = [] # List to contain the rows of French pledges
+
+for i in PledgeDf.index:
+    text = PledgeDf.iloc[i,1] # Looping over all Pledges row by row
+
+    if detect(text) == "fr": # If the majority of the text is frenche
+        liste.append(i) # Then add the row index to the list
+
+liste.append(42) # Exception to handle (too small pledge to detect the french)
+
+PledgeFr = PledgeDf[PledgeDf.index.isin(liste)]
+PledgeEn = PledgeDf[~PledgeDf.index.isin(liste)]
+
+
 """ Exporting Cleaned Data """
 
 CSVFilePath = str(DirPpath.absolute()) + "\semic_pledges\CleanedData.csv" 
-PledgeDf.to_csv(CSVFilePath)
+PledgeEn.to_csv(CSVFilePath)
+
+CSVFilePathFr = str(DirPpath.absolute()) + "\semic_pledges\CleanedDataFr.csv" 
+PledgeFr.to_csv(CSVFilePathFr)
