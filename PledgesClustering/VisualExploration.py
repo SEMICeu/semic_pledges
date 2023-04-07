@@ -19,7 +19,7 @@ import scipy.cluster.hierarchy as shc # For building hierachichal clustering alg
 
 # Load the Indexed data
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path - Specific for ipynb file - For .py: Path(os.path.dirname(os.path.realpath(__file__)).replace("\\", "/"))
-IndexedPath  = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1.csv"  
+IndexedPath  = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1Tf.csv"  
 
 print("The current location of IndexedDataV1.csv is: ", IndexedPath)
 
@@ -53,13 +53,13 @@ df["Y2"] = results[:,1]
 csfont = {'fontname':'Arial'} # setting font for axis labels
 hfont = {'fontname':'Georgia'} # setting font for title
 
-plt.figure(figsize=(8,6)) # setting size of the graph
+plt.figure(figsize=(8.75,3)) # setting size of the graph
 sns.scatterplot(
 
     x="Y1", y="Y2", # Data to plot
-    hue="Topic",  # Group by Topic
-    palette=sns.color_palette(), # Apply a given color palette
-    style = "Topic", # Ensure that each topic has a different style
+    #hue="Topic",  # Group by Topic
+    #palette=sns.color_palette(), # Apply a given color palette
+    #style = "Topic", # Ensure that each topic has a different style
     data=df, # Data source file
     legend="full", # Adding a legend
     
