@@ -4,6 +4,8 @@ import os # For finding the location of Cleaned Data file
 from pathlib import Path
 
 import pandas as pd # For data handling
+import matplotlib.pyplot as plt # For plotting data
+from wordcloud import WordCloud # For plotting wordclouds
 
 import string # For handling textual data
 import re # For preprocessing
@@ -92,6 +94,23 @@ PledgesDf['PreProcessedText'] = PledgesDf['Pledge'].apply(lambda x: preprocessin
 print("end pre-processing\n")
 
 print(PledgesDf.head())
+
+""" Visualisation """
+
+# Building a wordcloud for visualizing most frequent words
+cloud=WordCloud(colormap="ocean_r",width=600,height=400, background_color="#e5e5e5").generate(PledgesDf['PreProcessedText'].str.cat(sep=' '))
+fig=plt.figure(figsize=(13,18))
+plt.axis("off")
+plt.imshow(cloud,interpolation='bilinear')
+plt.show()
+
+# Most frequent words in the pledges after pre-processing
+plt.style.use('ggplot')
+plt.figure(figsize=(14,6))
+freq=pd.Series(" ".join(PledgesDf['PreProcessedText']).split()).value_counts()[:30]
+freq.plot(kind="bar", color = "orangered")
+plt.title("30 most frequent words",size=20)
+plt.show()
 
 # Outputting the pre-processed files
 PreProcessedDataPath = str(DirPpath.absolute()) + "\semic_pledges\PreProcessedData.csv"
