@@ -6,3 +6,4 @@ nltk # Library used for NLP operations
 gensim # Library for word embedding
 scikit-learn # Statistical models and approaches
 langdetect # Language detection model
+wordcloud # useful for word representation
