@@ -94,7 +94,7 @@ def tSNEPlot(x, topic):
     plt.show()
 
 # Applying the function on all Topic
-df.groupby('Topic').apply(lambda x: tSNEPlot(x, x["Topic"].unique()))
+#df.groupby('Topic').apply(lambda x: tSNEPlot(x, x["Topic"].unique()))
 
 
 """ Optimal Number of clusters - Global """
@@ -165,6 +165,6 @@ GraphAnalysis(IndexedData.loc[:, IndexedData.columns != "Topic"], "Global")
 """ Optimal Number of clusters - Topic by Topic """
 
 # Applying the function Topic by Topic
-IndexedData.groupby('Topic').apply(lambda x: GraphAnalysis(x, x["Topic"].unique()) if np.array(x).shape[0]>2 else print("Less than two items in the topic"))
+#IndexedData.groupby('Topic').apply(lambda x: GraphAnalysis(x, x["Topic"].unique()) if np.array(x).shape[0]>2 else print("Less than two items in the topic"))
 
 

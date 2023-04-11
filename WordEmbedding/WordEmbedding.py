@@ -140,14 +140,14 @@ class TfIdfEmbeddingVectorizer(object):
     
 
 w2v2 = dict(zip(wv2.index_to_key, wv2.vectors))
-modelw2 = TfIdfEmbeddingVectorizer(w2v2)
+ModelW2 = TfIdfEmbeddingVectorizer(w2v2)
 
 # converting text to numerical data using Word2Vec
-vectors_w2v2 = modelw2.transform(tokens, DfTfIdfVect)
+VectorsW2v2 = ModelW2.transform(tokens, DfTfIdfVect)
 
-print(vectors_w2v2)
+print(VectorsW2v2)
 
-DocIndexV1 = pd.DataFrame(vectors_w2v)# Outputting the indexed pledges file
+DocIndexV1 = pd.DataFrame(VectorsW2v2)# Outputting the indexed pledges file
 
 IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1Tf.csv"
 DocIndexV1.to_csv(IndexedPath)
