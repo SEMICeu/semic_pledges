@@ -114,16 +114,17 @@ plt.show()
 
 """ Adding extra stopwords """
 
-StopWords2 = pd.Series(" ".join(PledgesDf['PreProcessedText']).split()).value_counts()[:30].index.tolist()
-print(StopWords2)
+# No coherent results at the moment
+# StopWords2 = pd.Series(" ".join(PledgesDf['PreProcessedText']).split()).value_counts()[:30].index.tolist()
+# print(StopWords2)
 
-def RemoveFrequentWords(string, FrequentWords):
-    a = [i for i in string.split() if i not in FrequentWords] # Removing usual english stopwords from the string
-    return ' '.join(a) #Output - Same string after all the transformations
+# def RemoveFrequentWords(string, FrequentWords):
+#     a = [i for i in string.split() if i not in FrequentWords] # Removing usual english stopwords from the string
+#     return ' '.join(a) #Output - Same string after all the transformations
 
-PledgesDf['PreProcessedText'] = PledgesDf['PreProcessedText'].apply(lambda x: RemoveFrequentWords(x, StopWords2))
+# PledgesDf['PreProcessedText'] = PledgesDf['PreProcessedText'].apply(lambda x: RemoveFrequentWords(x, StopWords2))
 
-print(PledgesDf.head())
+# print(PledgesDf.head())
 
 
 """ Outputing the pre-process data """
