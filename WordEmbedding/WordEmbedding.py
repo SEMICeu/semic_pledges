@@ -6,6 +6,7 @@ import pandas as pd # For data handling
 import numpy as np
 
 import nltk #  For nlp processing
+from sklearn.feature_extraction.text import TfidfVectorizer # For obtaining Tf-Idf tokenization
 
 import gensim # For building and fine-tuning Word2Vec model
 from gensim.models import Word2Vec
@@ -26,6 +27,16 @@ print(PledgesDf.head()) # Controlling the data loaded
 """ Tokenize the pledges """
 
 tokens = [nltk.word_tokenize(i) for i in PledgesDf["PreProcessedText"]] 
+
+TfIdfVectorizer = TfidfVectorizer(analyzer='word',stop_words='english')
+
+TfIdfWm = TfIdfVectorizer.fit_transform(PledgesDf["PreProcessedText"])
+
+TfIdfTokens = TfIdfVectorizer.get_feature_names_out()
+DfTfIdfVect = pd.DataFrame(data = TfIdfWm.toarray(),columns = TfIdfTokens)
+
+print("\nTD-IDF Vectorizer\n")
+print(DfTfIdfVect)
 
 
 """ Analysis on the tokens """
@@ -59,7 +70,7 @@ model1 = wv2 # First approach: Rely on an unmodified version of the pre-trained 
 # Fine tuning to add here
 # https://czarrar.github.io/Gensim-Word2Vec/
 
-""" Indexing Pledges """
+""" Indexing Pledges with Mean Embedding """
 
 #building Word2Vec representation of each pledge using an averaging approach
 class MeanEmbeddingVectorizer(object):
@@ -88,5 +99,56 @@ vectors_w2v = modelw.transform(tokens)
 DocIndexV1 = pd.DataFrame(vectors_w2v)# Outputting the indexed pledges file
 
 IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1.csv"
+DocIndexV1.to_csv(IndexedPath)
+
+""" Indexing Pledges with Tf-Idf Embedding """
+
+#building Word2Vec representation of each pledge using a Tf-Idf approach
+class TfIdfEmbeddingVectorizer(object):
+    def __init__(self, word2vec):
+        self.word2vec = word2vec
+        # if a text is empty we should return a vector of zeros
+        # with the same dimensionality as all the other vectors
+        self.dim = len(next(iter(word2vec.values())))
+    def fit(self, X, y):
+            return self
+
+    def transform(self, X, tfidf):
+
+        DocList = []
+        i = 0
+        
+        for words in X:
+
+            WordList = []
+
+            for w in words:
+                 
+                try:
+                    if w in self.word2vec:
+                        weight = tfidf[w].iloc[i]
+                        WordList.append(self.word2vec[w] * weight)
+                    else:
+                        WordList.append(np.zeros(self.dim))
+                except:
+                    WordList.append(np.zeros(self.dim))
+
+            i+=1
+            DocList.append(np.sum(np.array(WordList), axis = 0))
+        
+        return np.array(DocList)
+    
+
+w2v2 = dict(zip(wv2.index_to_key, wv2.vectors))
+modelw2 = TfIdfEmbeddingVectorizer(w2v2)
+
+# converting text to numerical data using Word2Vec
+vectors_w2v2 = modelw2.transform(tokens, DfTfIdfVect)
+
+print(vectors_w2v2)
+
+DocIndexV1 = pd.DataFrame(vectors_w2v)# Outputting the indexed pledges file
+
+IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1Tf.csv"
 DocIndexV1.to_csv(IndexedPath)
 
