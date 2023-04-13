@@ -14,6 +14,7 @@ import nltk # NLP libraries and packages for preprocessing
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet
+import contractions # For dealing with contractions, e.g., I'm --> I am
 
 # nltk.download('stopwords')
 # nltk.download('wordnet')
@@ -36,7 +37,13 @@ PledgesDf = pd.read_csv(PledgesCsvPath, index_col=0) # Reading the csv file usin
 def FirstClean(text): #Input - String or text you want to process
     return " ".join(text.split()).replace("_x000D_","") #Output - Same string without \n and _x000D_
 
+def ReplaceContractions(text):
+    """Replace contractions in string of text"""
+    return contractions.fix(text)
+
 def PreProcess(text): #Input - String or text you want to process
+    text = re.sub(r"https:\s?\S+", "", text)
+    text = re.sub(r"http\S+", "", text) # Remove urls
     text = text.lower() # Lowercase all the characters from the string
     text = text.strip() # Remove the leading and trailing whitespaces
     text = re.compile('<.*?>').sub('', text)
@@ -44,6 +51,7 @@ def PreProcess(text): #Input - String or text you want to process
     text = re.sub(r'\[[0-9]*\]', ' ', text)
     text = re.sub(r'[^\w\s]', '', str(text)) # Remove non alphanumeric characters
     text = re.sub(r'\d', '', text) # Removing digits
+    text = re.sub(r"\b[a-zA-Z]\b", "", text) # Removing single characters
     text = re.sub(r'\s+', ' ', str(text).strip()) # Replacing "double, triple, etc" whitespaces by one
     return text #Output - Same string after all the transformations
 
@@ -84,7 +92,7 @@ def PreProcessing(text): # Combining all pre-processing steps
     print(n)
     print("length of the text is : ")
     print(len(FirstClean(text)))
-    return Lemmatizer(StopWord(PreProcess(FirstClean(text))))
+    return Lemmatizer(StopWord(PreProcess(ReplaceContractions(FirstClean(text)))))
 
 
 """ Main function """
