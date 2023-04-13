@@ -19,7 +19,7 @@ PledgeFilePath = str(DirPpath.absolute()) + "\semic_pledges\PledgeList.xlsx"
 
 print("Current Location of the Source file is :", PledgeFilePath)
 
-PledgeSheet = "Pledge List 25 October 2022" # Define the excel sheet where the pledges are to be found
+PledgeSheet = "Pledges text" # Define the excel sheet where the pledges are to be found
 PledgeDf = pd.read_excel(PledgeFilePath, sheet_name = PledgeSheet) # Creating a dataframe from the content of the excel file
 
 # Inspecting the first rows of the dataframe
@@ -51,7 +51,10 @@ liste = [] # List to contain the rows of French pledges
 for i in PledgeDf.index:
     text = PledgeDf.iloc[i,1] # Looping over all Pledges row by row
 
-    if detect(text) == "fr": # If the majority of the text is frenche
+    print(text)
+    print(i)
+
+    if detect(text) == "fr": # If the majority of the text is french
         liste.append(i) # Then add the row index to the list
 
 liste.append(42) # Exception to handle (too small pledge to detect the french)
