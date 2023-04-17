@@ -19,7 +19,7 @@ import scipy.cluster.hierarchy as shc # For building hierachichal clustering alg
 
 # Load the Indexed data
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path - Specific for ipynb file - For .py: Path(os.path.dirname(os.path.realpath(__file__)).replace("\\", "/"))
-IndexedPath  = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1Tf.csv"  
+IndexedPath  = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1.csv"  
 
 print("The current location of IndexedDataV1.csv is: ", IndexedPath)
 
@@ -79,7 +79,7 @@ def tSNEPlot(x, topic):
 
     ax = plt.axes()
     ax.scatter(x["Y1"], x["Y2"], c="#d04a02", marker= "v") # Setting data to plot, color, and markers type
-    ax.set_title("2D t-SNE plot of Topic " + str(topic), **hfont) # Defining a title and its format
+    ax.set_title("2D t-SNE plot of Topic " + str(topic[0]), **hfont) # Defining a title and its format
     ax.set_ylabel("Y2", **csfont) # Defining y-label
     ax.set_ylim(-25,25) # Standardizing the scale of y axis
     ax.set_xlabel("Y1", **csfont) # Idem for x axis
@@ -154,7 +154,7 @@ def Dendro(x):
 # Combining the two functions:
 def GraphAnalysis(x, topic):
 
-    print("Cluster Analysis of Topic:" + str(topic) + "\n")
+    print("Cluster Analysis of Topic:" + str(topic[0]) + "\n")
 
     ElbowGraph(x)
     Dendro(x)
