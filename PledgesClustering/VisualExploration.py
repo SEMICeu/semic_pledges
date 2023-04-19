@@ -79,7 +79,7 @@ def tSNEPlot(x, topic):
 
     ax = plt.axes()
     ax.scatter(x["Y1"], x["Y2"], c="#d04a02", marker= "v") # Setting data to plot, color, and markers type
-    ax.set_title("2D t-SNE plot of Topic " + str(topic[0]), **hfont) # Defining a title and its format
+    ax.set_title("Topic " + str(topic[0]) + ": " + str(mapping[topic[0]]), **hfont) # Defining a title and its format
     ax.set_ylabel("Y2", **csfont) # Defining y-label
     ax.set_ylim(-25,25) # Standardizing the scale of y axis
     ax.set_xlabel("Y1", **csfont) # Idem for x axis
@@ -94,6 +94,8 @@ def tSNEPlot(x, topic):
     plt.show()
 
 # Applying the function on all Topic
+mapping = {1: "Short-term rentals", 2: "Multimodal travelling", 3: "Expanding tourism indicators", 4: "Comprehensive tourism strategies", 5: "Collaborative and smart destination governance", 6: "Sunstainable mobility", 7: "Circular tourism services", 8: "Companies reducing environmental impacts", 9: "Data-driven tourism services", 10: "Clear online information offer", 11: "Networking, Best practice sharing", 12: "R&I projects and pilots on sustainable tourism", 13: "Experimenting environmental footprint methods for tourism", 14: "Interoperable data space for tourism", 15: "R&I for digital tools and services", 16: "Digitalisation of SMEs and destinations", 17: "Facilitating travelling (cross-border, coodinated rules sharing)", 18:"Facilitating travelling (cross-border, coodinated rules sharing)", 19: "Awareness raising (skills need, transition benefits)", 20:  "Awareness raising (skills need, transition benefits)", 21: "Skills and education development", 22: "Skills and education development", 23: "One-stop-shop to resources (skills, funding)", 27: "One-stop-shop to resources (skills, funding)", 24: "Fair and good quality jobs", 25: "Accessible tourism services", 26: "Diversification of tourism services, including resident perspective", 28: "Other"}
+
 df.groupby('Topic').apply(lambda x: tSNEPlot(x, x["Topic"].unique()))
 
 
@@ -148,7 +150,7 @@ def Dendro(x):
     clusters = shc.linkage(selected_data, 
                 method='ward', 
                 metric="euclidean")
-    shc.dendrogram(Z=clusters)
+    shc.dendrogram(Z=clusters, color_threshold=1.65)
     plt.show()
 
 # Combining the two functions:
