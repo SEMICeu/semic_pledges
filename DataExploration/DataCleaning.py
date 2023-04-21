@@ -30,7 +30,7 @@ print(PledgeDf.head())
 
 PledgeDf = PledgeDf.fillna("") # Dealing with the potential presence of nan in the data
 
-ToDrop =  ["Organisation name", "Country", "Type"] # The 3 last Variables are not used for the purpose of this project
+ToDrop =  ["Organisation name", "Country", "Type", "Pledge status"] # The 3 last Variables are not used for the purpose of this project
 PledgeDf.drop(ToDrop, inplace = True, axis = 1) # Using the .drop function to get rid of unnecessary columns (as listed in ToDrop) # Args: inplace = True to apply the changes directly into the dataframe ; axis = 1 to drop the values in the columns of df
 
 print("\n")
