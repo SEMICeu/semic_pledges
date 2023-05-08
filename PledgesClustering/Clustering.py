@@ -16,11 +16,11 @@ from sklearn.cluster import KMeans # For applying K-Means clustering
 # Load the Indexed data
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path
 
-IndexedPath  = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1.csv"
+IndexedPath  = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\IndexedDataV1.csv"
 IndexedData = pd.read_csv(IndexedPath, index_col=0)  
 
 # Load the Topic column from the preprocessed data
-PreprocessedPath  = str(DirPpath.absolute()) + "\semic_pledges\PreProcessedData.csv"  
+PreprocessedPath  = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\PreProcessedData.csv"  
 Topics = pd.read_csv(PreprocessedPath, index_col=0)
 
 IndexedData["Topic"] = Topics["Topic"].values # Adding a Topic column to the IndexedData dataframe
@@ -167,4 +167,4 @@ for topic in ResultsDf["Topics"]:
         areaList.append("Other")
 
 ResultsDf["Area"] = areaList
-ResultsDf.to_excel(str(DirPpath.absolute()) + "\semic_pledges\Clusters.xlsx")
+ResultsDf.to_excel(str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\Clusters.xlsx")

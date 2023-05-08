@@ -15,7 +15,7 @@ import gensim.downloader as api # Helpful for downloading
 """ Loading the pre-processed data """
 
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path - Specific for ipynb file - For .py: Path(os.path.dirname(os.path.realpath(__file__)).replace("\\", "/"))
-PledgesCsvPath = str(DirPpath.absolute()) + "\semic_pledges\PreprocessedData.csv" 
+PledgesCsvPath = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\PreprocessedData.csv" 
 
 print("The current location of PreprocessedData.csv is: ", PledgesCsvPath)
 
@@ -28,15 +28,15 @@ print(PledgesDf.head()) # Controlling the data loaded
 
 tokens = [nltk.word_tokenize(i) for i in PledgesDf["PreProcessedText"]] 
 
-TfIdfVectorizer = TfidfVectorizer(analyzer='word',stop_words='english')
+# TfIdfVectorizer = TfidfVectorizer(analyzer='word',stop_words='english')
 
-TfIdfWm = TfIdfVectorizer.fit_transform(PledgesDf["PreProcessedText"])
+# TfIdfWm = TfIdfVectorizer.fit_transform(PledgesDf["PreProcessedText"])
 
-TfIdfTokens = TfIdfVectorizer.get_feature_names_out()
-DfTfIdfVect = pd.DataFrame(data = TfIdfWm.toarray(),columns = TfIdfTokens)
+# TfIdfTokens = TfIdfVectorizer.get_feature_names_out()
+# DfTfIdfVect = pd.DataFrame(data = TfIdfWm.toarray(),columns = TfIdfTokens)
 
-print("\nTD-IDF Vectorizer\n")
-print(DfTfIdfVect)
+# print("\nTD-IDF Vectorizer\n")
+# print(DfTfIdfVect)
 
 
 """ Analysis on the tokens """
@@ -98,57 +98,58 @@ vectors_w2v = modelw.transform(tokens)
 
 DocIndexV1 = pd.DataFrame(vectors_w2v)# Outputting the indexed pledges file
 
-IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1.csv"
+IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\IndexedDataV1.csv"
 DocIndexV1.to_csv(IndexedPath)
 
-""" Indexing Pledges with Tf-Idf Embedding """
 
-#building Word2Vec representation of each pledge using a Tf-Idf approach
-class TfIdfEmbeddingVectorizer(object):
-    def __init__(self, word2vec):
-        self.word2vec = word2vec
-        # if a text is empty we should return a vector of zeros
-        # with the same dimensionality as all the other vectors
-        self.dim = len(next(iter(word2vec.values())))
-    def fit(self, X, y):
-            return self
+# """ Indexing Pledges with Tf-Idf Embedding """
 
-    def transform(self, X, tfidf):
+# #building Word2Vec representation of each pledge using a Tf-Idf approach
+# class TfIdfEmbeddingVectorizer(object):
+#     def __init__(self, word2vec):
+#         self.word2vec = word2vec
+#         # if a text is empty we should return a vector of zeros
+#         # with the same dimensionality as all the other vectors
+#         self.dim = len(next(iter(word2vec.values())))
+#     def fit(self, X, y):
+#             return self
 
-        DocList = []
-        i = 0
+#     def transform(self, X, tfidf):
+
+#         DocList = []
+#         i = 0
         
-        for words in X:
+#         for words in X:
 
-            WordList = []
+#             WordList = []
 
-            for w in words:
+#             for w in words:
                  
-                try:
-                    if w in self.word2vec:
-                        weight = tfidf[w].iloc[i]
-                        WordList.append(self.word2vec[w] * weight)
-                    else:
-                        WordList.append(np.zeros(self.dim))
-                except:
-                    WordList.append(np.zeros(self.dim))
+#                 try:
+#                     if w in self.word2vec:
+#                         weight = tfidf[w].iloc[i]
+#                         WordList.append(self.word2vec[w] * weight)
+#                     else:
+#                         WordList.append(np.zeros(self.dim))
+#                 except:
+#                     WordList.append(np.zeros(self.dim))
 
-            i+=1
-            DocList.append(np.sum(np.array(WordList), axis = 0))
+#             i+=1
+#             DocList.append(np.sum(np.array(WordList), axis = 0))
         
-        return np.array(DocList)
+#         return np.array(DocList)
     
 
-w2v2 = dict(zip(wv2.index_to_key, wv2.vectors))
-ModelW2 = TfIdfEmbeddingVectorizer(w2v2)
+# w2v2 = dict(zip(wv2.index_to_key, wv2.vectors))
+# ModelW2 = TfIdfEmbeddingVectorizer(w2v2)
 
-# converting text to numerical data using Word2Vec
-VectorsW2v2 = ModelW2.transform(tokens, DfTfIdfVect)
+# # converting text to numerical data using Word2Vec
+# VectorsW2v2 = ModelW2.transform(tokens, DfTfIdfVect)
 
-print(VectorsW2v2)
+# print(VectorsW2v2)
 
-DocIndexV1 = pd.DataFrame(VectorsW2v2)# Outputting the indexed pledges file
+# DocIndexV1 = pd.DataFrame(VectorsW2v2)# Outputting the indexed pledges file
 
-IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1Tf.csv"
-DocIndexV1.to_csv(IndexedPath)
+# IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\IndexedDataV1Tf.csv"
+# DocIndexV1.to_csv(IndexedPath)
 

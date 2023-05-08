@@ -20,7 +20,7 @@ from sklearn.model_selection import train_test_split # For creating train-test s
 # Load the Indexed data
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path
 
-ResultsPath  = str(DirPpath.absolute()) + "\semic_pledges\Clusters.xlsx"
+ResultsPath  = str(DirPpath.absolute()) + "\semic_pledges\OurputFiles\Clusters.xlsx"
 ResultsDf = pd.read_excel(ResultsPath)  
 
 print(ResultsDf.head()) # Controlling the data loaded

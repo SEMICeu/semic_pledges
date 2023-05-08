@@ -25,7 +25,7 @@ import contractions # For dealing with contractions, e.g., I'm --> I am
 """ Loading the cleaned data file: CleanedData.csv """
 
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path
-PledgesCsvPath = str(DirPpath.absolute()) + "\semic_pledges\CleanedData.csv" 
+PledgesCsvPath = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\CleanedData.csv" 
 
 print("The current location of CleanedData.csv is: ", PledgesCsvPath)
 
@@ -137,7 +137,7 @@ plt.show()
 
 """ Outputing the pre-process data """
 
-PreProcessedDataPath = str(DirPpath.absolute()) + "\semic_pledges\PreProcessedData.csv"
+PreProcessedDataPath = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\PreProcessedData.csv"
 PledgesDf.to_csv(PreProcessedDataPath)
 
 #PledgeTokens = [nltk.word_tokenize(i) for i in PledgesDf["PreProcessedText"]]
