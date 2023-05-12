@@ -103,7 +103,7 @@ def ExtractYears(filteredDates):
     # Looping over the different DATES from the set filteredDates
     for date in filteredDates:
 
-        # Step 1: Transforming (when) every time expression by their respective month using mapDict rules 
+        # Step 1: Transforming (when needed) every time expression by their respective month using mapDict rules 
         try:
             pattern = '|'.join(list(mapDict.keys()))
             date = re.sub(pattern, mapDict[re.search(pattern, date).group(0)], date)
@@ -119,14 +119,14 @@ def ExtractYears(filteredDates):
             try: # Exception 1, there is only a year in the date
                 year = "January " + str(re.findall(r"[12][0-9]{3}", date)[0])
             except:
-                try: # Exception 2, their no year but a reference to a time difference (within one year, etc.)
+                try: # Exception 2, there is no year but a reference to a time difference (within one year, etc.)
                     gap = w2n.word_to_num(date)
                     year = "January " + str(2023 + gap)
                 except:
                     gap = int(re.findall(r'\d+', date)[0])
                     year = "January " + str(2023 + gap)
 
-        # Step 3: Transform a the date from string to Datetime format
+        # Step 3: Transform the date from string to Datetime format
         year = datetime.strptime(year, '%B %Y')
 
         # Add the transformed year to the set
@@ -195,6 +195,7 @@ def DatesExtraction(PledgeDf):
                         topics.append(topic)
                         clusters.append(cluster)
                         Pledges.append(" ".join(Pledge))
+                
                 # Sentences with one date
                 else:
                     Dates.append(list(years)[0])
