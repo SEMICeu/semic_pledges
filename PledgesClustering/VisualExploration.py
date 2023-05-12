@@ -5,15 +5,13 @@ from pathlib import Path
 
 import pandas as pd # For data handling
 import numpy as np
-import math # For basic mathematical operations
 
 import matplotlib.pyplot as plt # For building plots
 import seaborn as sns # For visualization
 
 from sklearn.manifold import TSNE # For applying a dimensionality reduction (t-SNE)
-from sklearn.cluster import KMeans # For K-mean clustering algorithm
-import scipy.cluster.hierarchy as shc # For building hierachichal clustering algorithms
 
+from utils.Visuals import GraphAnalysis
 
 """ Loading the Indexed Pledges and Topic """
 
@@ -73,6 +71,14 @@ plt.show()
 
 # Creating a function for building tSNE plots
 def tSNEPlot(x, topic):
+    """
+    tSNEPlot generates scatter plots based on a tsne dataframe
+
+    :param x: Dataframe of dimension 2 containing the tsne reduction of the original indexed data
+    :param topic: Tuple containing the topic number at index 0
+    :param title: String indicating the title of the plot (either Topic or Cluster)
+    :return: A scatter plot
+    """
 
     csfont = {'fontname':'Arial'} # Font name for labels
     hfont = {'fontname':'Georgia'} # Font name for title
@@ -81,9 +87,9 @@ def tSNEPlot(x, topic):
     ax.scatter(x["Y1"], x["Y2"], c="#d04a02", marker= "v") # Setting data to plot, color, and markers type
     ax.set_title("Topic " + str(topic[0]) + ": " + str(mapping[topic[0]]), **hfont) # Defining a title and its format
     ax.set_ylabel("Y2", **csfont) # Defining y-label
-    ax.set_ylim(-25,25) # Standardizing the scale of y axis
+    ax.set_ylim(-30,30) # Standardizing the scale of y axis
     ax.set_xlabel("Y1", **csfont) # Idem for x axis
-    ax.set_xlim(-25,25)
+    ax.set_xlim(-30,30)
 
     ax.set_facecolor((218 / 255, 222 / 255, 224 / 256)) # Formatting the background's color
     plt.grid(which='major', color='w', linestyle='-') # Adding a grid to the background
@@ -103,70 +109,9 @@ df.groupby('Topic').apply(lambda x: tSNEPlot(x, x["Topic"].unique()))
 
 # To find the optimal number of cluster in the data, we proceed with a visual exploration using:
 # 1° The Elbow method:
-
-## Function to compute the Total Sum of Square in the data
-def TSS(data):
-    
-    x = np.array(data)
-    size = x.shape[0]
-    tss = []
-
-    for i in range(0,size):
-
-        tss.append((math.dist(x[i,:], np.mean(x, axis = 0)))**2)
-
-    return sum(tss)  
-
-## Function to build an elbow graph
-def ElbowGraph(x):
-
-    print("Elbow Graph: \n")
-    inertias = []
-    size = np.array(x).shape[0]
-
-    if size > 26:
-        size = 26
-
-    for i in range(1, size):
-        kmeans = KMeans(n_clusters=i)
-        kmeans.fit(x)
-        inertias.append(kmeans.inertia_ / TSS(x))
-
-    plt.plot(range(1,size), inertias, marker='o')
-    plt.title('WSS/TSS method')
-    plt.xlabel('Number of clusters')
-    plt.ylabel('WSS/TSS')
-    plt.show()
-
 # 2° Dendrogram
-def Dendro(x):
 
-    print("Dendrogram: \n")
-    plt.figure(figsize=(30, 7))
-    plt.title("Topics Dendrogram")
-
-    # Selecting Annual Income and Spending Scores by index
-    selected_data = x
-    clusters = shc.linkage(selected_data, 
-                method='ward', 
-                metric="euclidean")
-    shc.dendrogram(Z=clusters, color_threshold=1.65)
-    plt.show()
-
-# Combining the two functions:
-def GraphAnalysis(x, topic):
-
-    print("Cluster Analysis of Topic:" + str(topic[0]) + "\n")
-
-    ElbowGraph(x)
-    Dendro(x)
-
-# Applying the function on all data
 GraphAnalysis(IndexedData.loc[:, IndexedData.columns != "Topic"], "Global")
 
-""" Optimal Number of clusters - Topic by Topic """
-
-# Applying the function Topic by Topic
-IndexedData.groupby('Topic').apply(lambda x: GraphAnalysis(x, x["Topic"].unique()) if np.array(x).shape[0]>2 else print("Less than two items in the topic"))
 
 
