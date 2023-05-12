@@ -30,7 +30,7 @@ print(PledgeDf.head())
 
 PledgeDf = PledgeDf.fillna("") # Dealing with the potential presence of nan in the data
 
-ToDrop =  ["Organisation name", "Country", "Type", "Pledge status"] # The 3 last Variables are not used for the purpose of this project
+ToDrop =  ["Organisation name", "Country", "Type", "Pledge status"] # The 4 last Variables are not used for the purpose of this project
 PledgeDf.drop(ToDrop, inplace = True, axis = 1) # Using the .drop function to get rid of unnecessary columns (as listed in ToDrop) # Args: inplace = True to apply the changes directly into the dataframe ; axis = 1 to drop the values in the columns of df
 
 print("\n")
@@ -51,13 +51,14 @@ liste = [] # List to contain the rows of French pledges
 for i in PledgeDf.index:
     text = PledgeDf.iloc[i,1] # Looping over all Pledges row by row
 
-    print(text)
-    print(i)
+    #print(text)
+    #print(i)
 
     if detect(text) == "fr": # If the majority of the text is french
+        print(i)
         liste.append(i) # Then add the row index to the list
 
-liste.append(42) # Exception to handle (too small pledge to detect the french)
+liste.append(50) # Exception to handle (too small pledge to detect the french)
 
 PledgeFr = PledgeDf[PledgeDf.index.isin(liste)]
 PledgeEn = PledgeDf[~PledgeDf.index.isin(liste)]
