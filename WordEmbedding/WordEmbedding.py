@@ -10,11 +10,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer # For obtaining Tf-I
 
 import gensim # For building and fine-tuning Word2Vec model
 from gensim.models import Word2Vec
-import gensim.downloader as api # Helpful for downloading
+import gensim.downloader as api # Helpful for downloading pre-trained models
 
 """ Loading the pre-processed data """
 
-DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path - Specific for ipynb file - For .py: Path(os.path.dirname(os.path.realpath(__file__)).replace("\\", "/"))
+DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path
 PledgesCsvPath = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\PreprocessedData.csv" 
 
 print("The current location of PreprocessedData.csv is: ", PledgesCsvPath)
@@ -24,20 +24,9 @@ PledgesDf = pd.read_csv(PledgesCsvPath, index_col=0) # Loading the preprocessed 
 print(PledgesDf.head()) # Controlling the data loaded
 
 
-""" Tokenize the pledges """
+""" Tokenize the pledges on words """
 
 tokens = [nltk.word_tokenize(i) for i in PledgesDf["PreProcessedText"]] 
-
-# TfIdfVectorizer = TfidfVectorizer(analyzer='word',stop_words='english')
-
-# TfIdfWm = TfIdfVectorizer.fit_transform(PledgesDf["PreProcessedText"])
-
-# TfIdfTokens = TfIdfVectorizer.get_feature_names_out()
-# DfTfIdfVect = pd.DataFrame(data = TfIdfWm.toarray(),columns = TfIdfTokens)
-
-# print("\nTD-IDF Vectorizer\n")
-# print(DfTfIdfVect)
-
 
 """ Analysis on the tokens """
 
@@ -94,15 +83,25 @@ w2v = dict(zip(model1.index_to_key, model1.vectors))
 modelw = MeanEmbeddingVectorizer(w2v)
 
 # converting text to numerical data using Word2Vec
-vectors_w2v = modelw.transform(tokens)
+vectorsW2v = modelw.transform(tokens)
 
-DocIndexV1 = pd.DataFrame(vectors_w2v)# Outputting the indexed pledges file
+DocIndexV1 = pd.DataFrame(vectorsW2v)# Outputting the indexed pledges file
 
 IndexedPath = str(DirPpath.absolute()) + "\semic_pledges\OutputFiles\IndexedDataV1.csv"
 DocIndexV1.to_csv(IndexedPath)
 
 
 # """ Indexing Pledges with Tf-Idf Embedding """
+
+# TfIdfVectorizer = TfidfVectorizer(analyzer='word',stop_words='english')
+
+# TfIdfWm = TfIdfVectorizer.fit_transform(PledgesDf["PreProcessedText"])
+
+# TfIdfTokens = TfIdfVectorizer.get_feature_names_out()
+# DfTfIdfVect = pd.DataFrame(data = TfIdfWm.toarray(),columns = TfIdfTokens)
+
+# print("\nTD-IDF Vectorizer\n")
+# print(DfTfIdfVect)
 
 # #building Word2Vec representation of each pledge using a Tf-Idf approach
 # class TfIdfEmbeddingVectorizer(object):
