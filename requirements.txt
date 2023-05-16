@@ -8,6 +8,4 @@ scikit-learn # Statistical models and approaches
 langdetect # Language detection model
 wordcloud # useful for word representation
 contractions # pre-processing for expanding contractions, e.g., I'm --> I am
-textacy
-stanza
 word2number # converting numeric words to numbers
