@@ -41,8 +41,15 @@ PledgeDf["PreProcessedText"] = PledgeDf["Pledge"].apply(lambda x: RemoveURL(firs
 
 #1° Extracting Dates = pandas df containing dated sentences, dates, original pledge of the sentence, topic of the pledge, cluster of the pledge 
 DatesResults = DatesExtraction(PledgeDf)
-#2° Extracting Dated Results = Adding a column indicating for the presence of results in the dated sentence
-DatesResults["Results?"] = GetResults(DatesResults["Sentences"])[0]
+#2° Extracting Dated Results = Adding a column indicating for the presence of results in the dated sentence + 6 columns indicating for the categories of results presented in the sentence (based on keywords)
+output = GetResults(DatesResults["Sentences"])
+names = ["Results?", "Reports?", "Events?", "Trainings?", "Project results", "Best practices?", "Awards?"]
+i = 0
+
+for name in names:
+
+    DatesResults[name] =  output[i]
+    i +=1
 
 print(DatesResults.head())
 
