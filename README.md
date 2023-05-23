@@ -17,7 +17,7 @@ The next pages document the different steps taken in this project. We will give 
 
 As previously mentioned, this text mining project aimed at analysing a set of stakeholder pledges the EU’s Transition Pathway for Tourism. The dataset was an Excel file containing the list of these pledges as of March 27, 2022. Aside from the pledge’s texts, the source file also contained additional information about it (topic of the pledge, the name, country, and type of organisation that wrote the text, and the status of the pledge).
 
-![](/Figures/Figure1.png)
+![](/Figures/Figure1.png = 4,02x16,35)
 
 At this stage of the project, the dataset was composed of 382 pledges distributed across 28 different topics. Note that those topics were assigned by the pledge’s author based on a predefined list of 27 topic names and description plus an ‘Other’ category. 
 
@@ -25,7 +25,7 @@ At this stage of the project, the dataset was composed of 382 pledges distribute
 
 Since the goal of this project was to perform text clustering and results extraction, i.e., it mainly focuses on analysing textual data from pledges, the first cleaning step consisted in dropping all the non-textual columns from the dataset. Hence, we dropped the “Organisation name”, “Country”, “Type”, and “Pledge status” variables. However, the “Topic” column was kept as it provides relevant information about expected clusters in the pledges.
 
-![](/Figures/Figure2.png)
+![](/Figures/Figure2.png = 4,18x16,49)
 
 Next to this initial step, we needed to deal with two common data issues: Missing Values and Data Type errors. Therefore, we first looked for the presence of potential NaN (Not a Number) in the list of pledges and removed them from the dataset if needed. Then we ensured that all the topics and pledges in our data were having the correct data type, i.e., pledges should be strings and topics integers. 
 
@@ -40,17 +40,17 @@ Figure 3 displays the distribution of already labelled topics across the dataset
 
 Next to this bar plot, we also investigated how the length of Pledges’ text was varying across our dataset. Figures 4 and 5 show that over 90% of the data consists of pledges containing between 50 and 400 words, with some topics presenting more variance than others. We can also note that we had to deal with 13 very large pledges.   
 
-![](/Figures/Figure3.png)
+![](/Figures/Figure3.png = 7,51x16,51)
 
-![](/Figures/Figure4.png)
+![](/Figures/Figure4.png = 10,64x13,68)
 
-![](/Figures/Figure5.png)
+![](/Figures/Figure5.png = 10,47x13,23)
 
 ## Topic extraction
 
 As a reminder, the first objective was to apply topic extraction on a set of pledges to identify emerging topics, assign pledges to their respective topic, and to determine the main differences between those topics. For this purpose, we chose to rely on text clustering and followed the process displayed in Figures 6, 7, and 8.
 
-![](/Figures/Figure68.png)
+![](/Figures/Figure68.png = 14,7x21,23)
 
 ### 1) Pre-processing of textual content
 
@@ -76,9 +76,9 @@ After the document indexing, we obtained that every pledge from the dataset to b
 
 To find those clusters, we first needed to determine how many of them there were. This was achieved by relying on two common clustering techniques, the analysis of an elbow graph and a dendrogram. From this human analysis, it appeared that the optimal number of pledge clusters was equal to 6. 
 
-![](/Figures/Figure9.png)
+![](/Figures/Figure9.png = 10,58x13,67)
 
-![](/Figures/Figure10.png)
+![](/Figures/Figure10.png = 9,78x18,11)
 
 Knowing this optimal number, we could apply a clustering algorithm to assign each pledge to its respective cluster. As displayed on Figure 8, the chosen algorithm was a K-means algorithm. Note that given the dependence of K-means results to the initial centres, we decided to repeat the algorithm 500 times to find the initial centres that minimised the performance criterion (clusters’ inertia). The results of the optimal K-means algorithm were then stored in an excel file. 
 
@@ -86,15 +86,15 @@ Knowing this optimal number, we could apply a clustering algorithm to assign eac
 
 To analyse the results of this clustering task, we generated two main sets of visuals. On the one hand, we used t-SNE dimensionality reduction to represent pledges by vectors of 2 instead of 300 dimensions. This transformation allowed us to visualise the distance between pledges through 2D-scatter plots. These graphs can then be used to analyse the coherence of generated clusters and/or of already labelled topics. Given that the graph is a projection of higher dimensionality, the rendering is an approximation of the actual position of the points in the 300-dimension space.
 
-![](/Figures/Figure11.png)
+![](/Figures/Figure11.png = 8,92x11,22)
 
 On the other hand, different visuals were investigated to determine the subject shared by pledges from the same cluster. To identify those emerging topics, we looked for the most important words in the clusters. To define the notion of the most important word, we relied on two different approaches. First, we searched for the 20 words with the highest tf-idf weights and plotted them in a word cloud. Then, to find words with the highest discriminative power, we relied on the results of binary classification tasks (1 classification per cluster) using a RandomForest classifier. The most discriminant words being the words with the highest feature importance for classifying pledges as being part (or not) of a cluster. The importance was then plotted in horizontal bar plots. 
 
-![](/Figures/Figure12.png)
+![](/Figures/Figure12.png = 19,88x16,76)
 
-![](/Figures/Figure13.png)
+![](/Figures/Figure13.png = 9,99x13,47)
 
-![](/Figures/Figure14.png)
+![](/Figures/Figure14.png = 9,59x13,49)
 
 ### Limits and potential for future work
 
@@ -112,7 +112,7 @@ Finally, a last point of concern regards the chosen methodology for obtaining a 
 
 As previously mentioned, the goal of this result extraction task was to identify the results presented in the pledges and to derive timelines of results based on their anticipated emergence. This was achieved by following the various steps presented by Figures 15 and 16.
 
-![](/Figures/Figure1516.png)
+![](/Figures/Figure1516.png = 8,76x16,27)
 
 Similarly to clustering, the results extraction started by a pre-processing step. However, the transformation was this time strongly reduced as the performance of the next steps (NER, results identification, etc.) depended not only on words but also on sentence structure. Hence, the pre-processing was limited to a removal of URLs and non-ASCII characters using regular expressions. 
 
@@ -124,7 +124,7 @@ The next step consisted in identifying result sentences among the list of dated 
 
 To visualise the results, the initial objective of this task was to create timelines of results (one per topic and one per cluster). To materialise those timelines, we used histograms of dates, i.e., plots displaying the distribution of dates across results sentences. Such timelines were first created for all the sentences and for dates ranging between 2022 and 2050. Then, similar timelines were plotted for each cluster and each topic.
 
-![](/Figures/Figure17.png)
+![](/Figures/Figure17.png = 7,3x16,51)
 
 ### 2) Limits and potential for future work
 
