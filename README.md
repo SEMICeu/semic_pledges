@@ -2,7 +2,12 @@
 
 This project is the result of a collaboration between DG DIGIT and DG GROW on the use of text mining for the analysis of pledges on the Transition Pathway for Tourism. This project had two goals: (1) topic extraction and (2) result extraction from pledges.
 
-The objective of topic extraction was to identify emerging topics in the provided pledges: each pledge should be assigned to its respective topic and each topic should be identified. To reach this objective, we relied on a text clustering process divided in two main steps, (1) the indexing of pledges using a Word2Vec model and (2) the clustering of pledges using K-means algorithm. 
+The objective of topic extraction was to identify emerging topics in the provided pledges: each pledge should be assigned to its respective topic and each topic should be identified. To reach this objective, we relied on a text clustering process divided in two main steps: 
+
+(1) the indexing of pledges using a Word2Vec model 
+
+(2) the clustering of pledges using K-means algorithm. 
+
 For results extraction, the goal was to identify what were the different results presented in the pledges and to derive timelines of results based on their implementation date. In other words, for this section of the project, we had to extract both dates and results from textual data. From a technical point of view, the extraction of both entities was done by using Named Entity Recognition (NER) and regular expressions. 
 
 The next pages document the different steps taken in this project. We will give an overview of the text mining processes and models used as well as the limitations of those approaches. 
@@ -12,6 +17,7 @@ The next pages document the different steps taken in this project. We will give 
 
 As previously mentioned, this text mining project aimed at analysing a set of stakeholder pledges the EU’s Transition Pathway for Tourism. The dataset was an Excel file containing the list of these pledges as of March 27, 2022. Aside from the pledge’s texts, the source file also contained additional information about it (topic of the pledge, the name, country, and type of organisation that wrote the text, and the status of the pledge).
 
+![](Figures\Figure1.png)
 
 At this stage of the project, the dataset was composed of 382 pledges distributed across 28 different topics. Note that those topics were assigned by the pledge’s author based on a predefined list of 27 topic names and description plus an ‘Other’ category. 
 
