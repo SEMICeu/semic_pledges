@@ -3,6 +3,7 @@
 <div style='text-align: justify;'>
 This project is the result of a collaboration between DG DIGIT and DG GROW on the use of text mining for the analysis of pledges on the Transition Pathway for Tourism. This project had two goals: 
 
+
 (1) topic extraction 
 
 (2) result extraction from pledges.
