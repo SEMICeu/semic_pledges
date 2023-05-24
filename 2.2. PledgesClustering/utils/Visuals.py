@@ -75,8 +75,8 @@ def Dendro(x):
     plt.title("Topics Dendrogram")
 
     # Selecting Annual Income and Spending Scores by index
-    selected_data = x
-    clusters = shc.linkage(selected_data, 
+    SelectedData = x
+    clusters = shc.linkage(SelectedData, 
                 method='ward', 
                 metric="euclidean")
     shc.dendrogram(Z=clusters, color_threshold=1.75)

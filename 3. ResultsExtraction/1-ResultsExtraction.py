@@ -26,7 +26,7 @@ PledgeDf.head()
 
 # Preprocessing Data
 
-def first_clean(text):
+def FirstClean(text):
     return " ".join(text.split())
 
 def RemoveURL(text):
@@ -35,7 +35,7 @@ def RemoveURL(text):
     text = re.sub(r"http\S+", "", text) 
     return re.sub(r'[^\x00-\x7f]',r'',  text) # Remove non-ASCII
 
-PledgeDf["PreProcessedText"] = PledgeDf["Pledge"].apply(lambda x: RemoveURL(first_clean(x)))
+PledgeDf["PreProcessedText"] = PledgeDf["Pledge"].apply(lambda x: RemoveURL(FirstClean(x)))
 
 # Extracting Results
 
