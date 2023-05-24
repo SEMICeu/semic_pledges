@@ -1,7 +1,11 @@
 # Text Mining on GROW Tourism Pledges - Documentation
 
 <div style='text-align: justify;'>
-This project is the result of a collaboration between DG DIGIT and DG GROW on the use of text mining for the analysis of pledges on the Transition Pathway for Tourism. This project had two goals: (1) topic extraction and (2) result extraction from pledges.
+This project is the result of a collaboration between DG DIGIT and DG GROW on the use of text mining for the analysis of pledges on the Transition Pathway for Tourism. This project had two goals: 
+
+(1) topic extraction 
+
+(2) result extraction from pledges.
 
 The objective of topic extraction was to identify emerging topics in the provided pledges: each pledge should be assigned to its respective topic and each topic should be identified. To reach this objective, we relied on a text clustering process divided in two main steps: 
 
