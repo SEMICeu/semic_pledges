@@ -20,6 +20,13 @@ DatesResults = pd.read_excel(XlsxFilePath) # Creating a dataframe from the conte
 # Inspecting the first rows of the dataframe
 DatesResults.head()
 
+# Defining the initial size of the dataset
+CsvFilePath = str(DirPpath.absolute()) + r"\semic_pledges\OutputFiles\CleanedData.csv"
+InitialData = pd.read_csv(CsvFilePath, index_col=0)  
+
+size = len(InitialData["Topic"])
+print(size)
+
 
 """ First Analysis """
 
@@ -29,7 +36,7 @@ n = firstAnalysis["Pledge"].value_counts().size
 
 print(n)
 
-pledgeplot = pd.Series([1]).repeat(n).append(pd.Series([0]).repeat(373-n))
+pledgeplot = pd.Series([1]).repeat(n).append(pd.Series([0]).repeat(size-n))
 pledgeplot.value_counts().plot(kind="bar")
 plt.show()
 
@@ -40,7 +47,7 @@ n = firstAnalysis["Pledge"].value_counts().size
 
 print(n)
 
-pledgeplot = pd.Series([1]).repeat(n).append(pd.Series([0]).repeat(373-n))
+pledgeplot = pd.Series([1]).repeat(n).append(pd.Series([0]).repeat(size-n))
 pledgeplot.value_counts().plot(kind="bar")
 plt.show()
 
