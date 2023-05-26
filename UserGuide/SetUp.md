@@ -73,7 +73,7 @@ e. Select the recently created folder as destination for the repository
 f. Trust the authors of the codes
 
 <p align="center">
-    <img src="/UserGuide/Figures/repos3.png" width = 640 height = 330>
+    <img src="/UserGuide/Figures/repos3.png" width = 640 height = 250>
 </p>
 
 g. The project should appear in the editor
