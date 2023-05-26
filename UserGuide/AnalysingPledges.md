@@ -23,6 +23,10 @@ Then, create a new excel file containing the data of interest, name it **PledgeL
 
 To create excel files containing respectively the results from the **Topic** and **Result extraction** (clusters, results sentences, ...), one has to run the following scritps: 
 
+<p align="center">
+    <img src="/UserGuide/Figures/process.png" height = 119 width = 750 class = "center">
+</p>
+
 - *1-DataCleaning.py* : Located in the **1. DataExploration** folder, this script creates a CSV file containing the cleaned dataset with only *Topic* and *Pledge*.
 
 - *1-PreProcessing.py* : Located in the **2.1. WordEmbedding** folder, this script applies the different preprocessing procedures to the *CleanedData.csv* and returns a new CSV file with the pre-processed pledges. 
