@@ -79,5 +79,7 @@ For each of the tasks, different scripts have been created to visualize the resu
     <img src="/UserGuide/Figures/visuals2.png" width = 623 height = 200>
 </p>
 
+**NB:** To display the different visuals, the code automatically opens an independent window. However, one can only see one plot at a time, i.e., to see the next visual (or to end the script) one need to close the current window (the code stops running while the window is open). 
+
 
 
