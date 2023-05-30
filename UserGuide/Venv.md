@@ -16,7 +16,7 @@ After this first action, the editor will immediately suggest to create a *Venv* 
     <img src="/UserGuide/Figures/venv1.png" width = 640 height = 135>
 </p>
 
-Then, VS code will ask for the interpreter path, i.e., the path to the location where Python has been installed. One can either type the path directly in the prompt, or select **Enter interpreter path...** and click on **Find...** to search for Python application in the file system. 
+Then, VS code will ask for the interpreter path, i.e., the path to the location where Python has been installed. You can either type the path directly in the prompt, or select **Enter interpreter path...** and click on **Find...** to search for Python application in the file system. 
 
 <p align="center">
     <img src="/UserGuide/Figures/venv2.png" width = 640 height = 135>
@@ -30,7 +30,7 @@ Then, VS code will ask for the interpreter path, i.e., the path to the location 
     <img src="/UserGuide/Figures/venv4.png" width = 328 height = 230>
 </p>
 
-Finally, one will have the possibility to add dependencies (*requirements.txt*) to the virtual environment. This action is not required. It will simply allow to install all the packages needed to run this project. Yet this can also be done afterwards using: 
+Finally, you will have the possibility to add dependencies (*requirements.txt*) to the virtual environment. This action is not required. It will simply allow to install all the packages needed to run this project. Note that this can also be done afterwards using: 
 ```
 pip install -r requirements.txt
 ``` 
@@ -55,7 +55,7 @@ This can be done by opening a terminal window (**Ctrl+shift+ù**) and entering t
 .venv\Scripts\activate
 ```
 
-This is what that terminal window should look like after the activation command: 
+After this activation command, the terminal window should look like that: 
 ```
 PS <path of current directory> .venv\Scripts\activate
 

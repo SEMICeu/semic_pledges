@@ -4,7 +4,7 @@ In this document, we describe the different steps to follow to reproduce the ana
 
 ## 0) Installing the relevant packages
 
-Before running any of the scripts, it is important to ensure that all the required packages have already been installed on one's device. This can be done by entering the following command in a terminal window (for Windows): 
+Before running any of the scripts, it is important to ensure that all the required packages have already been installed on your device. This can be done by entering the following command in a terminal window (for Windows): 
 ```
 pip install -r requirements.txt
 ```
@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 Currently, the file on which the pledges' analysis is performed only contains pledges for the Tourism transition pathway as of 27/03/2022. Hence to apply the analysis on a new set of data, the first step to undertake should be to update the source file **PledgeList.xlsx**
 
-To do that, start by going to the **InputFile** folder and deleter the current **PledgeList.xlsx** file. 
+To do so, start by going to the **InputFile** folder and delete the current **PledgeList.xlsx** file. 
 
 Then, create a new excel file containing the data of interest, name it **PledgeList.xlsx**, and save it in the **InputFile** folder. 
 
@@ -21,7 +21,7 @@ Then, create a new excel file containing the data of interest, name it **PledgeL
 
 ## 2) Creating files of results
 
-To create excel files containing respectively the results from the **Topic** and **Result extraction** (clusters, results sentences, ...), one has to run the following scritps: 
+To create excel files containing respectively the results from the **Topic** and **Result extraction** (clusters, results sentences, ...), you will have to run the following scritps: 
 
 <p align="center">
     <img src="/UserGuide/Figures/process.png" height = 68 width = 750 class = "center">
@@ -31,19 +31,19 @@ To create excel files containing respectively the results from the **Topic** and
 
 - *1-PreProcessing.py* : Located in the **2.1. WordEmbedding** folder, this script applies the different preprocessing procedures to the *CleanedData.csv* and returns a new CSV file with the pre-processed pledges. 
 
-- *2-WordEmbedding.py* : Located in the **2.1. WordEmbedding** folder, this script creates a new CSV file contained vectors of the indexed pre-processed pledges (*IndexedDataV1.csv).
+- *2-WordEmbedding.py* : Located in the **2.1. WordEmbedding** folder, this script creates a new CSV file containing vectors of the indexed pre-processed pledges (*IndexedDataV1.csv*).
 
 - *1-Clustering.py* : Located in the **2.2. PledgesClustering** folder, this script uses the indexed pledges to identify and label 6 cluster of pledges in the data. This script also provides some basic visuals (t-SNE plot of each cluster)
 
 - *1-ResultsExtraction.py* : Located in the **3. ResultsExtraction** folder, this script extracts the dated results sentences found in *CleanedData.csv*.
 
-**NB:** For grouping the pledges in more or less than 6 clusters, one can replace the **6** in line 32 of *1-Clustering.py* by the number of one's choice.
+**NB:** For grouping the pledges in more or less than 6 clusters, you can replace the **6** in line 32 of *1-Clustering.py* by the number of your choice.
 
 After running those scripts, the excel containing the final results will be created in the **OutputFile** folder under the name **Clusters.xlsx** and **NerResults.xlsx**. 
 
 ## 3) Visualising the results
 
-For each of the tasks, different scripts have been created to visualize the results and facilitate the analysis. One can find here a short description of what each of those script can provide: 
+For each of the tasks, different scripts have been created to visualize the results and facilitate the analysis of the results. You can find here a short description of what each of those script can provide: 
 
 - *2-DataVisualisation.py* in **1. DataExploration**: Creates basic visuals to get a first overview of the pledges after cleaning (see [Documentation](/README.md#early-data-visualization)) 
 
