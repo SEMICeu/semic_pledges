@@ -15,7 +15,7 @@ from langdetect import detect # Language detection models
 """ Uploading the source file: PledgeList.xlsx """
 
 DirPpath = Path(os.path.abspath('')).parent # Fetching the current directory path's parent
-PledgeFilePath = str(DirPpath.absolute()) + "\semic_pledges\InputFile\PledgeList.xlsx"  
+PledgeFilePath = str(DirPpath.absolute()) + "\semic_pledges\InputFile\PledgeList2.xlsx"  
 
 print("Current Location of the Source file is :", PledgeFilePath)
 

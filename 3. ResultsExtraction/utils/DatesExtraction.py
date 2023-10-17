@@ -123,8 +123,12 @@ def ExtractYears(filteredDates):
                     gap = w2n.word_to_num(date)
                     year = "January " + str(2023 + gap)
                 except:
-                    gap = int(re.findall(r'\d+', date)[0])
-                    year = "January " + str(2023 + gap)
+                    try:
+                        gap = int(re.findall(r'\d+', date)[0])
+                        year = "January " + str(2023 + gap)
+                    except: 
+                        print(date)
+                        continue
 
         # Step 3: Transform the date from string to Datetime format
         year = datetime.strptime(year, '%B %Y')
@@ -195,6 +199,9 @@ def DatesExtraction(PledgeDf):
                         topics.append(topic)
                         clusters.append(cluster)
                         Pledges.append(" ".join(Pledge))
+                
+                elif len(years) == 0:
+                    continue
                 
                 # Sentences with one date
                 else:
