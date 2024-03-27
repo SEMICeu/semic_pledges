@@ -1,0 +1,42 @@
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/public/favicon.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                AI Pledge analysis tools
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/topic_analysis/{{ .sessionId }}">Topic analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/keyword_search/{{ .sessionId }}">Keyword search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/summarization/{{ .sessionId }}">Summarization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ .csvDownloadUrl }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                        </svg> Download analysis (csv) </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/upload">Upload</a>
+                    </li>
+                </ul>
+
+                <!-- Right-aligned item -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>

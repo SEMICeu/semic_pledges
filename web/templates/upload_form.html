@@ -1,0 +1,67 @@
+<form id='form' hx-encoding='multipart/form-data' hx-post='/upload'>
+    <br>
+
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Please upload your file and ensure that it is in the correct format. The tool supports Excel files (xlsx) that do not exceed 25 MB.</label>
+        <input class="form-control" type="file" id="formFile" name="files" accept=".xlsx" required>
+    </div>
+
+    <div id="buttonUploadingDiv" class="mb-3" style="display:none;">
+        <button class="btn btn-outline-primary" type="button">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Uploading files...
+        </button>
+    </div>
+
+    <div id="buttonUploadDiv" class="mb-3">
+        <button class="btn btn-outline-primary {{.disabled}}" id="buttonUpload">
+            Upload
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="sendError" tabindex="-1" aria-labelledby="sendErrorLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="sendErrorLabel">Network error</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Local network interruption, try again</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ .csrfField }}
+
+</form>
+
+<script>
+    document.body.addEventListener('htmx:beforeRequest', function (evt) {
+        if (evt.detail.elt.id === 'form') {
+            document.getElementById('buttonUploadingDiv').style.display = 'block';
+            document.getElementById('buttonUploadDiv').style.display = 'none';
+        }
+    });
+    document.body.addEventListener('htmx:afterRequest', function (evt) {
+        if (evt.detail.elt.id === 'form') {
+            document.getElementById('buttonUploadingDiv').style.display = 'none';
+            document.getElementById('buttonUploadDiv').style.display = 'none';
+        }
+    });
+    document.body.addEventListener('htmx:sendError', function (evt) {
+        if (evt.detail.elt.id === 'form') {
+            document.getElementById('buttonUploadingDiv').style.display = 'none';
+            document.getElementById('buttonUploadDiv').style.display = 'block';
+
+            var errorModal = new bootstrap.Modal(document.getElementById('sendError'));
+            errorModal.show();
+        }
+    });
+</script>
+

@@ -1,0 +1,28 @@
+{{ template "header.html" .}}
+{{ template "color_mode.html" .}}
+{{ template "navbar_initial.html" .}}
+
+<br>
+<h5> Welcome to the pledges analysis tool</h5>
+<p> This pledges analysis tool allows you to upload your file with pledges and get an instant analysis on them. This tool offers a variety of analyses that have been identified as the most essential, including general analysis, in-depth topic exploration, content-based pledge clustering and distribution overview.</p>
+<h5> How to get started</h5>
+Just click on <a href="/upload">upload</a> and upload your file. Once it’s processed successfully, you'll be able to access relevant graphs and analysis, and even download the results.
+<p></p>
+<p class="font-weight-bold">Requirements</p>
+
+Please make sure your file is in the correct format. The tool supports <b>Excel files (xlsx)</b> that do not exceed <b>25 MB</b>. Note that one line should present one pledge, not more.
+<p></p>
+<p>Please make sure your file has the following columns:</p>
+
+<li>Pledge text</li>
+<li>Topic/Action</li>
+<li>Organisation name</li>
+<li>Organisation type</li>
+<li>Country</li>
+<li>Pledge status (Published or not yet Published)</li>
+<p></p>
+Download the template to view an example of the correct file format.
+
+<br>
+
+{{ template "footer.html" .}}

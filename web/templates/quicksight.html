@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script src="/public/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <title>Pledges</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="/public/style.css">
+
+    <script src="https://unpkg.com/amazon-quicksight-embedding-sdk@2.6.0/dist/quicksight-embedding-js-sdk.min.js"></script>
+    <script type="text/javascript">
+        const getStoredTheme = () => localStorage.getItem('theme')
+
+        const determineThemeArn = () => {
+            // Get the stored theme value
+            const storedTheme = getStoredTheme();
+
+            if (storedTheme === 'auto') {
+                const autoTheme = (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                // Determine the themeArn based on the auto theme
+                if (autoTheme === 'dark') {
+                    return "arn:aws:quicksight::aws:theme/MIDNIGHT";
+                } else if (autoTheme === 'light') {
+                    return "arn:aws:quicksight::aws:theme/CLASSIC";
+                } else {
+                    // Default value
+                    return "arn:aws:quicksight::aws:theme/CLASSIC";
+                }
+            }
+
+            // Determine the themeArn based on the stored theme
+            if (storedTheme === 'dark') {
+                return "arn:aws:quicksight::aws:theme/MIDNIGHT";
+            } else if (storedTheme === 'light') {
+                return "arn:aws:quicksight::aws:theme/CLASSIC";
+            } else {
+                // Default value
+                return "arn:aws:quicksight::aws:theme/CLASSIC";
+            }
+        };
+
+        const embedDashboard = async () => {
+            const {
+                createEmbeddingContext,
+            } = QuickSightEmbedding;
+
+            const embeddingContext = await createEmbeddingContext();
+            const containerDiv = document.getElementById("embedding-container");
+
+            const frameOptions = {
+// replace the value below with the one generated via embedding API
+                url: "{{ .url }}",
+                container: containerDiv,
+                "resizeHeightOnSizeChangedEvent": true
+
+            };
+
+            const contentOptions = {
+                themeOptions: {
+                    themeArn: determineThemeArn()
+                },
+                parameters: [
+                    {
+                        Name: 'sessionId',
+                        Values: [
+                            '{{ .sessionId }}'
+                        ],
+                    }
+                ],
+                toolbarOptions: {
+                    export: false,
+                    undoRedo: false, // use this option to show or hide the undo and redo buttons
+                    reset: false, // use this option to show or hide the  reset button
+                },
+                attributionOptions: {
+                    overlayContent: false,
+                },
+            };
+
+            const embeddedDashboard = await embeddingContext.embedDashboard(frameOptions, contentOptions);
+
+            document.querySelectorAll('[data-bs-theme-value]')
+                .forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        embeddedDashboard.setTheme(determineThemeArn())
+                    })
+                })
+
+        };
+    </script>
+</head>
+
+<body class="bg-gray-200 w-screen min-h-screen h-full flex flex-col" onload="embedDashboard()">

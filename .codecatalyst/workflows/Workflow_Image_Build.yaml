@@ -1,0 +1,72 @@
+Name: Workflow_Image_Build_Deploy_frontend
+Compute:
+  Type: EC2
+  Fleet: Linux.x86-64.Large
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: Push
+    Branches:
+      - main
+
+# Required - Define action configurations.
+Actions:
+  Build_frontend:
+    Identifier: aws/build@v1
+    Environment:
+      Name: dev
+      Connections:
+        - Name: ***
+          Role: digit-semic-dev-codecatalyst-workflow-docker
+    Inputs:
+      Sources:
+        - WorkflowSource # This specifies that the action requires this workflow as a source
+      Variables:
+        - Name: region
+          Value: eu-west-1
+        - Name: registry
+          Value: ***.dkr.ecr.eu-west-1.amazonaws.com
+        - Name: image
+          Value: digit-semic-dev-frontend
+        - Name: git_user
+          Value: thierrypwc
+        - Name: git_repo
+          Value: pledges-ui
+
+
+    Configuration:
+      Steps:
+        - Run: |
+            latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+            tag_date=$(git log -1 --format='%aI' "$latest_tag" | sed 's/ /T/;s/ //')
+            echo "Latest tag: $latest_tag"
+            # Increment the version tag's last digit
+            new_version_tag=$(echo $latest_tag | awk -F '.' '{print $1"."$2"."$3+1}')
+            echo "New tag: $new_version_tag"
+        - Run: |
+            export account=`aws sts get-caller-identity --output text | awk '{ print $1 }'`
+            # Docker login
+            aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${registry}
+        - Run: |
+            # Go Build
+            CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags "-X pledges/pkg/handler.Version=$new_version_tag" -o pledges ./cmd/pledges/
+        - Run: |    
+            # Docker Build
+            echo "Docker Build image: $image tag: $new_version_tag"
+            docker build -t ${image}:$new_version_tag .
+            # Docker tag & push
+            echo "Docker tag & push $registry/$image:$new_version_tag"
+            docker tag ${image}:$new_version_tag ${registry}/${image}:$new_version_tag
+            docker push ${registry}/${image}:$new_version_tag
+        - Run: |
+            git remote set-url origin https://${git_user}:${Secrets.GIT_PAT}@git.eu-west-1.codecatalyst.aws/v1/digit-b2/dev/${git_repo}
+
+        - Run: |
+            # Tag the last commit with the new version tag
+            echo "Git tag"
+            git tag -a "$new_version_tag" -m "Version $new_version_tag"
+            # Push the new tag to the remote repository
+            echo "Git push"
+            git push origin "$new_version_tag"
+

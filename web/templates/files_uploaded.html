@@ -1,0 +1,50 @@
+<div>
+    {{ if eq .filesShared true }}
+    <br>
+    <p>Files uploaded</p>
+    <br>
+    <div class="input-group mb-3">
+
+        <button
+                class="btn btn-outline-secondary"
+                data-clipboard-text="{{ .urlSafePledgeUlid }}"
+                type="button"
+                id="button-share"
+                data-bs-container="body"
+                data-bs-toggle="popover"
+                data-bs-placement="bottom"
+                data-bs-content="Copied!">
+            <i class="bi bi-clipboard"></i>
+        </button>
+
+        <input id="pledgeuilid" class="form-control" type="text" placeholder="{{ .urlSafePledgeUlid }}" readonly>
+    </div>
+    {{ end }}
+</div>
+
+
+<div id="processingDiv" class="mb-3" style="display:block;">
+    <button class="btn btn-outline-primary" type="button">
+        <span class="spinner-border spinner-border-sm" role="status" ></span>
+        Processing files...
+    </button>
+</div>
+
+<div id="processedDiv" class="mb-3" style="display:none;">
+    <a href="/topic_analysis/{{ .urlSafePledgeUlid }}">Analyse my results</a>
+</div>
+
+<script>
+    new ClipboardJS('.btn' );
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+</script>
+
+<script>
+    setTimeout(function() {
+        var hideElement = document.getElementById('processingDiv');
+        var displayElement = document.getElementById('processedDiv');
+        hideElement.style.display = 'none';
+        displayElement.style.display = 'block';
+    }, 90000); // Hide the element after 90 seconds (90,000 milliseconds)
+</script>
