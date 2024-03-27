@@ -1,0 +1,37 @@
+Name: Infra_Deploy_terraform
+Compute:
+  Type: EC2
+  Fleet: Linux.x86-64.Large
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: Push
+    Branches:
+      - main
+
+# Required - Define action configurations.
+Actions:
+  Deploy:
+    Identifier: aws/build@v1
+    Environment:
+      Name: dev
+      Connections:
+        - Name: ***
+          Role: digit-semic-dev-codecatalyst-worfklow-terraform
+    Inputs:
+      Sources:
+        - WorkflowSource # This specifies that the action requires this workflow as a source
+
+    Configuration:
+      Steps:
+        - Run: export TF_VERSION=1.5.7 && wget -O terraform.zip "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
+        - Run: unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod +x /usr/bin/terraform
+        - Run: terraform -v
+        - Run: export TF_IN_AUTOMATION=Y
+        - Run: cd aws/dev
+        - Run: terraform fmt -check -no-color
+        - Run: terraform init -no-color
+        - Run: terraform validate -no-color
+        - Run: terraform plan -no-color -input=false -out=tfplan
+        - Run: terraform apply tfplan
